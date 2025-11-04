@@ -1,0 +1,29 @@
+# Pasta de build do Maven
+/target/
+
+# Arquivos de log
+*.log
+
+# Configurações do NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/build/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Configurações de IDEs
+*.iml
+.idea/
+.vscode/
+.classpath
+.project
+.settings/
+
+# Credenciais ou arquivos temporários
+*.tmp
+*.bak
+
