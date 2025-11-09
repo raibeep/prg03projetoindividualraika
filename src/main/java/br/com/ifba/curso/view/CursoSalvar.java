@@ -77,7 +77,7 @@ public class CursoSalvar extends javax.swing.JFrame {
                 return;//sai sem salvar
             }
             
-            if(nome.matches("[a-zA-ZÀ-ÿ\\\\s]+")){//verifica se entrou algum nome com simbolos ou números
+            if(!nome.matches("[a-zA-ZÀ-ÿ\\\\s]+")){//verifica se entrou algum nome com simbolos ou números
                 JOptionPane.showMessageDialog(this, "O nome do curso deve conter apenas letras!", 
                     "Entrada inválida", JOptionPane.WARNING_MESSAGE);
                 return;//sai sem salvar

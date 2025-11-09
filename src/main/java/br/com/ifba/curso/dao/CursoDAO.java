@@ -7,6 +7,7 @@ package br.com.ifba.curso.dao;
 import br.com.ifba.curso.util.JPAUtil;
 import br.com.ifba.curso.entity.Curso;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
 
@@ -64,5 +65,20 @@ public class CursoDAO {
         List<Curso> cursos = query.getResultList();//armazena todos os obejtos em curso, criando uma lista
         em.close();
         return cursos;//retorna a lista
+    }
+    
+    public Curso buscarCodigo(String nome, String codigo){
+        EntityManager em = JPAUtil.getEntityManager();
+        try{
+            TypedQuery<Curso> query = em.createQuery(
+                    "SELECT c FROM Curso WHERE c.nome = :nome AND c.cogigoCurso = :codigo", Curso.class);
+            query.setParameter("nome", nome);
+            query.setParameter("codigo", codigo);
+            return query.getSingleResult();
+        }catch(NoResultException e){
+            return null;
+        }finally{
+            em.close();
+        }
     }
 }
