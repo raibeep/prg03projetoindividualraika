@@ -38,6 +38,8 @@ public class CursoSalvar extends javax.swing.JFrame {
         txtNome = new javax.swing.JTextField();
         txtCodigo = new javax.swing.JTextField();
         bntSalvar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtCargaHoraria = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -61,7 +63,13 @@ public class CursoSalvar extends javax.swing.JFrame {
                 bntSalvarActionPerformed(evt);
             }
         });
-        getContentPane().add(bntSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(129, 120, -1, -1));
+        getContentPane().add(bntSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, -1, -1));
+
+        jLabel3.setText("Carga Horária: ");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
+
+        txtCargaHoraria.setText("Digite aqui");
+        getContentPane().add(txtCargaHoraria, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, 90, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -70,8 +78,9 @@ public class CursoSalvar extends javax.swing.JFrame {
         try{
             String nome = txtNome.getText().trim();//esse trim serve para ver se o usuário não digitou só espaço 
             String codigo = txtCodigo.getText().trim();
+            String cargaHoraria = txtCargaHoraria.getText().trim();
             
-            if(nome.isEmpty() || codigo.isEmpty()){//verifica se os campos estáo vazios
+            if(nome.isEmpty() || codigo.isEmpty() || cargaHoraria.isEmpty()){//verifica se os campos estáo vazios
                 JOptionPane.showMessageDialog(this, "Preencha todos os campos!", 
                         "Entrada inválida", JOptionPane.WARNING_MESSAGE);
                 return;//sai sem salvar
@@ -83,17 +92,17 @@ public class CursoSalvar extends javax.swing.JFrame {
                 return;//sai sem salvar
             }
             
-            Curso curso = new Curso(nome, codigo);
+            Curso curso = new Curso(nome, codigo, cargaHoraria);
         
             CursoDAO c = new CursoDAO();
             c.salvarCurso(curso);
             
-            JOptionPane.showMessageDialog(this, "Curso salvo com sucesso!!",
+            JOptionPane.showMessageDialog(null, "Curso salvo com sucesso!!",
                     "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
             
         }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "ERRO ao salvar curso" + e.getMessage(),
-                    "ERRO", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(null, "ERRO ao salvar curso" + e.getMessage(),
+                    "ERRO", JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_bntSalvarActionPerformed
@@ -127,6 +136,8 @@ public class CursoSalvar extends javax.swing.JFrame {
     private javax.swing.JButton bntSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField txtCargaHoraria;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables

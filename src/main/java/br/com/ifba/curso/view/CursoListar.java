@@ -4,6 +4,8 @@
  */
 package br.com.ifba.curso.view;
 
+import br.com.ifba.curso.dao.CursoDAO;
+import br.com.ifba.curso.entity.Curso;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.util.List;
 
 /**
  *
@@ -68,6 +71,11 @@ public class CursoListar extends javax.swing.JFrame {
         jPanel1.add(bntPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 30, 30));
 
         bntAdicionar.setIcon(new javax.swing.ImageIcon("C:\\Users\\raiii\\OneDrive\\Documentos\\NetBeansProjects\\prg03projetoindividualraika\\src\\main\\java\\br\\com\\ifba\\image\\adicao (1).png")); // NOI18N
+        bntAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntAdicionarActionPerformed(evt);
+            }
+        });
         jPanel1.add(bntAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, -1, 30));
 
         tblCursos.setModel(new javax.swing.table.DefaultTableModel(
@@ -82,7 +90,6 @@ public class CursoListar extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(tblCursos);
-        tblCursos.getAccessibleContext().setAccessibleParent(scrollTabela);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 47, 470, 258));
         jPanel1.add(scrollTabela, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, 20, 230));
@@ -100,6 +107,11 @@ public class CursoListar extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bntAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntAdicionarActionPerformed
+        CursoSalvar tela = new CursoSalvar();
+        tela.setVisible(true);
+    }//GEN-LAST:event_bntAdicionarActionPerformed
     private void configurarTabela() {
         // 1) Cria o modelo com as colunas e dados de exemplo
     String[] colunas = {"Código", "Nome", "Carga Horária", "Ativo", "Editar", "Remover"};
@@ -115,10 +127,20 @@ public class CursoListar extends javax.swing.JFrame {
             return String.class;
         }
     };
-
-    // Dados apenas para visualização (remova quando for carregar do BD)
-    modelo.addRow(new Object[]{"C001", "Java Básico", "60h", true, "Editar", "Remover"});
-    modelo.addRow(new Object[]{"C002", "Banco de Dados", "80h", false, "Editar", "Remover"});
+    
+    CursoDAO dao = new CursoDAO();
+    List<Curso> lista = dao.buscarTodos();
+    
+     for (Curso c : lista) {
+            modelo.addRow(new Object[]{
+                c.getCodigoCurso(),
+                c.getNome(), 
+                c.getCargaHoraria(),
+                c.isAtivo(),
+                "Editar",
+                "Remover",
+            });
+     }
 
     // 2) Atribui o modelo à tabela
     tblCursos.setModel(modelo);

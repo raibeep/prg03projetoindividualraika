@@ -100,13 +100,13 @@ public class CursoExcluir extends javax.swing.JFrame {
             String codigo = txtCodigo.getText();
             
             CursoDAO dao = new CursoDAO();
-            Curso curso = dao.buscarCodigo(nome, codigo);
+            Curso curso = dao.buscarCodigo(nome, codigo);//curso vai receber um curso encontrado na base de dados 
             
-            if(curso != null){
+            if(curso != null){//se achar o curso entra aqui
                 dao.removerCurso(curso);
-                JOptionPane.showMessageDialog(null, "Curso excluído com sucesso");
-            }else{
-                JOptionPane.showMessageDialog(null, "Curso não encontrado!");
+                JOptionPane.showMessageDialog(this, "Curso excluído com sucesso");
+            }else{//se não achar...
+                JOptionPane.showMessageDialog(this, "Curso não encontrado!");
             }
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, "ERRO ao excluir curso" + e.getMessage(),

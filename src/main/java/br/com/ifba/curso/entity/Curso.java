@@ -21,11 +21,16 @@ public class Curso {
     
     private String nome;
     private String codigoCurso;
-    private boolean ativo;
+    private String cargaHoraria;
+
+    public Curso(){
+        
+    }
     
-    public Curso(String nome, String codigoCurso) {
+    public Curso(String nome, String codigoCurso, String cargaHoraria) {
         this.nome = nome;
         this.codigoCurso = codigoCurso;
+        this.cargaHoraria = cargaHoraria;
         this.ativo = true; // define automaticamente como ativo
     }
 
@@ -61,4 +66,14 @@ public class Curso {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
+    
+    public String getCargaHoraria() {
+        return cargaHoraria;
+    }
+
+    public void setCargaHoraria(String cargaHoraria) {
+        this.cargaHoraria = cargaHoraria;
+    }
+    private boolean ativo;
+    
 }
