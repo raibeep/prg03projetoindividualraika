@@ -4,7 +4,9 @@
  */
 package br.com.ifba.curso.view;
 
+import br.com.ifba.curso.dao.CursoDAO;
 import br.com.ifba.curso.entity.Curso;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,12 +19,20 @@ public class CursoEditar extends javax.swing.JFrame {
     /**
      * Creates new form CursoEditar
      */
-    public CursoEditar() {
+    private Curso curso;
+    
+    public CursoEditar(){
         initComponents();
     }
-    
-    public CursoEditar(Curso curso){
+    public CursoEditar(Curso curso) {
+        initComponents();
+        this.curso = curso;
+        
+        txtNovoNome.setText(curso.getNome());
+        txtNovoCodigo.setText(curso.getCodigoCurso());
+        txtNovaCarga.setText(curso.getCargaHoraria());
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,21 +43,99 @@ public class CursoEditar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        txtNovoNome = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtNovoCodigo = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtNovaCarga = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Novo nome: ");
+
+        txtNovoNome.setText("Digite aqui");
+
+        jLabel2.setText("Novo código:");
+
+        txtNovoCodigo.setText("Digite aqui");
+
+        jLabel3.setText("Nova carga horária: ");
+
+        txtNovaCarga.setText("Digite aqui");
+
+        jButton1.setText("Salvar Mudanças");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNovaCarga, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addGap(35, 35, 35)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNovoNome, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                                    .addComponent(txtNovoCodigo)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(130, 130, 130)
+                        .addComponent(jButton1)))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtNovoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtNovoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtNovaCarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try{
+            curso.setNome(txtNovoNome.getText());
+            curso.setCodigoCurso(txtNovoCodigo.getText());
+            curso.setCargaHoraria(txtNovaCarga.getText());
+            
+            CursoDAO dao = new CursoDAO();
+            dao.atualizarCurso(curso);
+            
+            JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
+            dispose();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "ERRO ao atualizar dados!");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -75,5 +163,12 @@ public class CursoEditar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField txtNovaCarga;
+    private javax.swing.JTextField txtNovoCodigo;
+    private javax.swing.JTextField txtNovoNome;
     // End of variables declaration//GEN-END:variables
 }
