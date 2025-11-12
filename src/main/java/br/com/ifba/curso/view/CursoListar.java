@@ -6,17 +6,8 @@ package br.com.ifba.curso.view;
 
 import br.com.ifba.curso.dao.CursoDAO;
 import br.com.ifba.curso.entity.Curso;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.util.List;
 
 /**
@@ -131,7 +122,7 @@ public class CursoListar extends javax.swing.JFrame {
         };
     
         CursoDAO dao = new CursoDAO();
-        List<Curso> lista = dao.buscarTodos();
+        List<Curso> lista = dao.findAll();
     
         for (Curso c : lista) {
             modelo.addRow(new Object[]{
@@ -174,7 +165,7 @@ public class CursoListar extends javax.swing.JFrame {
                 if (column == 4) {
                     String codigo = tblCursos.getValueAt(row, 0).toString();
                     CursoDAO dao = new CursoDAO();
-                    Curso curso = dao.buscarCodigo(null, codigo); // use o método que você já tem
+                    Curso curso = dao.findCodigo(codigo); // use o método que você já tem
                     if (curso != null) {
                         CursoEditar tela = new CursoEditar(curso);
                         tela.setVisible(true);
@@ -192,9 +183,9 @@ public class CursoListar extends javax.swing.JFrame {
                     );
                     if (opc == javax.swing.JOptionPane.YES_OPTION) {
                         CursoDAO dao = new CursoDAO();
-                        Curso curso = dao.buscarCodigo(null, codigo);
+                        Curso curso = dao.findCodigo(codigo);
                         if (curso != null) {
-                            dao.removerCurso(curso);
+                            dao.delete(curso);
                             javax.swing.JOptionPane.showMessageDialog(null, "Curso removido com sucesso!");
                             configurarTabela(); // Atualiza a tabela após remover
                         }

@@ -22,7 +22,8 @@ public class CursoExcluir extends javax.swing.JFrame {
     public CursoExcluir() {
         initComponents();
     }
-
+   
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,23 +96,24 @@ public class CursoExcluir extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntExcluirActionPerformed
-        try{
-            String nome = txtNome.getText();
+        try {
             String codigo = txtCodigo.getText();
-            
+
             CursoDAO dao = new CursoDAO();
-            Curso curso = dao.buscarCodigo(nome, codigo);//curso vai receber um curso encontrado na base de dados 
-            
-            if(curso != null){//se achar o curso entra aqui
-                dao.removerCurso(curso);
+            Curso curso = dao.findCodigo(codigo); // busca no banco pelo código
+    
+            if (curso != null) {
+                dao.delete(curso);
                 JOptionPane.showMessageDialog(this, "Curso excluído com sucesso");
-            }else{//se não achar...
-                JOptionPane.showMessageDialog(this, "Curso não encontrado!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Curso não encontrado.");
             }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "ERRO ao excluir curso" + e.getMessage(),
-                    "ERRO", JOptionPane.ERROR);
-        }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "ERRO ao excluir curso: " + e.getMessage(),
+                "ERRO", JOptionPane.ERROR_MESSAGE);
+}
+
     }//GEN-LAST:event_bntExcluirActionPerformed
 
     /**

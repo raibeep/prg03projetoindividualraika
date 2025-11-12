@@ -4,20 +4,17 @@
  */
 package br.com.ifba.curso.entity;
 
+import br.com.ifba.infrastructure.entity.PersistenceEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.io.Serializable;
 
 /**
  *
  * @author raiii
  */
 @Entity
-public class Curso {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class Curso extends PersistenceEntity
+                    implements Serializable{
     
     private String nome;
     private String codigoCurso;
@@ -32,15 +29,6 @@ public class Curso {
         this.codigoCurso = codigoCurso;
         this.cargaHoraria = cargaHoraria;
         this.ativo = true; // define automaticamente como ativo
-    }
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getNome() {

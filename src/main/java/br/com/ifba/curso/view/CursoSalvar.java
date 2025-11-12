@@ -86,7 +86,7 @@ public class CursoSalvar extends javax.swing.JFrame {
                 return;//sai sem salvar
             }
             
-            if(!nome.matches("[a-zA-ZÀ-ÿ\\\\s]+")){//verifica se entrou algum nome com simbolos ou números
+            if(!nome.matches("[\\p{L} ]+")){//bloqueia números, mas aceita acentos e espaços
                 JOptionPane.showMessageDialog(this, "O nome do curso deve conter apenas letras!", 
                     "Entrada inválida", JOptionPane.WARNING_MESSAGE);
                 return;//sai sem salvar
@@ -95,7 +95,7 @@ public class CursoSalvar extends javax.swing.JFrame {
             Curso curso = new Curso(nome, codigo, cargaHoraria);
         
             CursoDAO c = new CursoDAO();
-            c.salvarCurso(curso);
+            c.save(curso);
             
             JOptionPane.showMessageDialog(null, "Curso salvo com sucesso!!",
                     "Sucesso!", JOptionPane.INFORMATION_MESSAGE);

@@ -128,7 +128,7 @@ public class CursoEditar extends javax.swing.JFrame {
             curso.setCargaHoraria(txtNovaCarga.getText());
             
             CursoDAO dao = new CursoDAO();
-            dao.atualizarCurso(curso);
+            dao.update(curso);
             
             JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
             dispose();
