@@ -7,6 +7,7 @@ package br.com.ifba.curso.view;
 import br.com.ifba.curso.controller.CursoController;
 import br.com.ifba.curso.controller.CursoIController;
 import br.com.ifba.curso.entity.Curso;
+import br.com.ifba.infrastructure.util.StringUtil;
 import javax.swing.JOptionPane;
 /**
  *
@@ -22,9 +23,11 @@ public class CursoSalvar extends javax.swing.JFrame {
      */
     private final CursoIController cursoIController = new CursoController();
     private final CursoListar telaListar;
+    private final Curso curso = new Curso();
     public CursoSalvar(CursoListar telaListar) {
         this.telaListar = telaListar;
-        initComponents();
+        initComponents();        
+        checkAtivo.setSelected(true);
 
         setTitle("Salvar Curso");
     }
@@ -45,6 +48,7 @@ public class CursoSalvar extends javax.swing.JFrame {
         bntSalvar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtCargaHoraria = new javax.swing.JTextField();
+        checkAtivo = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -68,7 +72,7 @@ public class CursoSalvar extends javax.swing.JFrame {
                 bntSalvarActionPerformed(evt);
             }
         });
-        getContentPane().add(bntSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, -1, -1));
+        getContentPane().add(bntSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, -1, -1));
 
         jLabel3.setText("Carga Horária: ");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
@@ -76,29 +80,35 @@ public class CursoSalvar extends javax.swing.JFrame {
         txtCargaHoraria.setText("Digite aqui");
         getContentPane().add(txtCargaHoraria, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, 90, -1));
 
+        checkAtivo.setText("Ativo");
+        checkAtivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkAtivoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(checkAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSalvarActionPerformed
         try{
-            String nome = txtNome.getText().trim();//esse trim serve para ver se o usuário não digitou só espaço 
-            String codigo = txtCodigo.getText().trim();
-            String cargaHoraria = txtCargaHoraria.getText().trim();
+            curso.setNome(txtNome.getText());
+            curso.setCodigoCurso(txtCodigo.getText());
+            curso.setCargaHoraria(txtCargaHoraria.getText());
             
-            if(nome.isEmpty() || codigo.isEmpty() || cargaHoraria.isEmpty()){//verifica se os campos estáo vazios
-                JOptionPane.showMessageDialog(this, "Preencha todos os campos!", 
-                        "Entrada inválida", JOptionPane.WARNING_MESSAGE);
-                return;//sai sem salvar
+            if (StringUtil.isEmpty(curso.getNome()) || 
+                StringUtil.isEmpty(curso.getCodigoCurso()) ||
+                StringUtil.isEmpty(curso.getCargaHoraria())){
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos.");
+            return;
             }
             
-            if(!nome.matches("[\\p{L} ]+")){//bloqueia números, mas aceita acentos e espaços
-                JOptionPane.showMessageDialog(this, "O nome do curso deve conter apenas letras!", 
-                    "Entrada inválida", JOptionPane.WARNING_MESSAGE);
-                return;//sai sem salvar
+            if (!StringUtil.isOnlyLetters(curso.getNome())) {
+                JOptionPane.showMessageDialog(null, "O nome deve conter apenas letras.");
+                return;
             }
-            
-            Curso curso = new Curso(nome, codigo, cargaHoraria);
-        
+
             cursoIController.save(curso);
             
             telaListar.atualizarTabela();
@@ -113,6 +123,10 @@ public class CursoSalvar extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_bntSalvarActionPerformed
+
+    private void checkAtivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkAtivoActionPerformed
+        curso.setAtivo(checkAtivo.isSelected());
+    }//GEN-LAST:event_checkAtivoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,6 +154,7 @@ public class CursoSalvar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntSalvar;
+    private javax.swing.JCheckBox checkAtivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
