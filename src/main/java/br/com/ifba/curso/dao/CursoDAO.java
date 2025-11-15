@@ -5,9 +5,9 @@
 package br.com.ifba.curso.dao;
 //importa as classes de outros pacotes que desejo usar aqui
 import br.com.ifba.curso.entity.Curso;
-import static br.com.ifba.curso.util.JPAUtil.getEntityManager;
 import br.com.ifba.infrastructure.dao.GenericDao;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 
 
@@ -22,17 +22,26 @@ public class CursoDAO extends GenericDao<Curso>
     
     @Override
     public Curso findByCodigo(String codigo){
-        EntityManager em = getEntityManager();
+        EntityManager em = null;
         Curso curso = null;
+
         try {
-            // Cria a consulta JPQL para buscar pelo campo codigoCurso
+            em = Persistence
+                    .createEntityManagerFactory("gerenciamento_curso")
+                    .createEntityManager();
+
             Query query = em.createQuery("SELECT c FROM Curso c WHERE c.codigoCurso = :codigo");
+
             query.setParameter("codigo", codigo);
+
             curso = (Curso) query.getSingleResult();
+
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Nenhum curso encontrado para o código: " + codigo);
         } finally {
-            em.close();
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
         }
         return curso;
     }
