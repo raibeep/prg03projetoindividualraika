@@ -4,7 +4,8 @@
  */
 package br.com.ifba.curso.view;
 
-import br.com.ifba.curso.dao.CursoDAO;
+import br.com.ifba.curso.controller.CursoController;
+import br.com.ifba.curso.controller.CursoIController;
 import br.com.ifba.curso.entity.Curso;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -100,7 +101,7 @@ public class CursoListar extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private final CursoIController cursoIController = new CursoController();
     private void bntAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntAdicionarActionPerformed
         CursoSalvar tela = new CursoSalvar();
         tela.setVisible(true);
@@ -121,8 +122,7 @@ public class CursoListar extends javax.swing.JFrame {
             }
         };
     
-        CursoDAO dao = new CursoDAO();
-        List<Curso> lista = dao.findAll();
+        List<Curso> lista = cursoIController.findAll();
     
         for (Curso c : lista) {
             modelo.addRow(new Object[]{
@@ -164,8 +164,7 @@ public class CursoListar extends javax.swing.JFrame {
                 // Botão Editar (coluna 4)
                 if (column == 4) {
                     String codigo = tblCursos.getValueAt(row, 0).toString();
-                    CursoDAO dao = new CursoDAO();
-                    Curso curso = dao.findCodigo(codigo); // use o método que você já tem
+                    Curso curso = cursoIController.findByCodigo(codigo);
                     if (curso != null) {
                         CursoEditar tela = new CursoEditar(curso);
                         tela.setVisible(true);
@@ -182,10 +181,9 @@ public class CursoListar extends javax.swing.JFrame {
                         javax.swing.JOptionPane.YES_NO_OPTION
                     );
                     if (opc == javax.swing.JOptionPane.YES_OPTION) {
-                        CursoDAO dao = new CursoDAO();
-                        Curso curso = dao.findCodigo(codigo);
+                        Curso curso = cursoIController.findByCodigo(codigo);
                         if (curso != null) {
-                            dao.delete(curso);
+                            cursoIController.delete(curso);
                             javax.swing.JOptionPane.showMessageDialog(null, "Curso removido com sucesso!");
                             configurarTabela(); // Atualiza a tabela após remover
                         }

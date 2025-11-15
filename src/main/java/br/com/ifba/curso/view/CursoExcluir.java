@@ -4,7 +4,8 @@
  */
 package br.com.ifba.curso.view;
 
-import br.com.ifba.curso.dao.CursoDAO;
+import br.com.ifba.curso.controller.CursoController;
+import br.com.ifba.curso.controller.CursoIController;
 import br.com.ifba.curso.entity.Curso;
 import javax.swing.JOptionPane;
 
@@ -94,16 +95,15 @@ public class CursoExcluir extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private final CursoIController cursoIController = new CursoController();
     private void bntExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntExcluirActionPerformed
         try {
             String codigo = txtCodigo.getText();
 
-            CursoDAO dao = new CursoDAO();
-            Curso curso = dao.findCodigo(codigo); // busca no banco pelo código
+            Curso curso = cursoIController.findByCodigo(codigo);
     
             if (curso != null) {
-                dao.delete(curso);
+                cursoIController.delete(curso);
                 JOptionPane.showMessageDialog(this, "Curso excluído com sucesso");
             } else {
                 JOptionPane.showMessageDialog(this, "Curso não encontrado.");

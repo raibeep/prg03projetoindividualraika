@@ -4,8 +4,9 @@
  */
 package br.com.ifba.curso.view;
 
+import br.com.ifba.curso.controller.CursoController;
+import br.com.ifba.curso.controller.CursoIController;
 import br.com.ifba.curso.entity.Curso;
-import br.com.ifba.curso.dao.CursoDAO;
 import javax.swing.JOptionPane;
 /**
  *
@@ -73,7 +74,7 @@ public class CursoSalvar extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private final CursoIController cursoIController = new CursoController();
     private void bntSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSalvarActionPerformed
         try{
             String nome = txtNome.getText().trim();//esse trim serve para ver se o usuário não digitou só espaço 
@@ -94,8 +95,7 @@ public class CursoSalvar extends javax.swing.JFrame {
             
             Curso curso = new Curso(nome, codigo, cargaHoraria);
         
-            CursoDAO c = new CursoDAO();
-            c.save(curso);
+            cursoIController.save(curso);
             
             JOptionPane.showMessageDialog(null, "Curso salvo com sucesso!!",
                     "Sucesso!", JOptionPane.INFORMATION_MESSAGE);

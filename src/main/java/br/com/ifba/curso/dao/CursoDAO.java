@@ -9,7 +9,6 @@ import static br.com.ifba.curso.util.JPAUtil.getEntityManager;
 import br.com.ifba.infrastructure.dao.GenericDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
 
 
 /**
@@ -20,7 +19,9 @@ import jakarta.persistence.TypedQuery;
 //é aqui onde eu vou criar os métodos salvar, editar, excluir e etc.
 public class CursoDAO extends GenericDao<Curso>
                         implements CursoIDao{
-    public Curso findCodigo(String codigo){
+    
+    @Override
+    public Curso findByCodigo(String codigo){
         EntityManager em = getEntityManager();
         Curso curso = null;
         try {

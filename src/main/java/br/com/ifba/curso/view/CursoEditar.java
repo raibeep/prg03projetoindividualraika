@@ -4,7 +4,8 @@
  */
 package br.com.ifba.curso.view;
 
-import br.com.ifba.curso.dao.CursoDAO;
+import br.com.ifba.curso.controller.CursoController;
+import br.com.ifba.curso.controller.CursoIController;
 import br.com.ifba.curso.entity.Curso;
 import javax.swing.JOptionPane;
 
@@ -120,15 +121,14 @@ public class CursoEditar extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private final CursoIController cursoIController = new CursoController();
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try{
             curso.setNome(txtNovoNome.getText());
             curso.setCodigoCurso(txtNovoCodigo.getText());
             curso.setCargaHoraria(txtNovaCarga.getText());
             
-            CursoDAO dao = new CursoDAO();
-            dao.update(curso);
+            cursoIController.update(curso);
             
             JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
             dispose();

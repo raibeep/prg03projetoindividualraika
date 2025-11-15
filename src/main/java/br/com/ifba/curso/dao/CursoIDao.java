@@ -12,5 +12,5 @@ import br.com.ifba.infrastructure.dao.GenericIDao;
  * @author raiii
  */
 public interface CursoIDao extends GenericIDao<Curso>{
-    
+    public Curso findByCodigo(String codigo);
 }
